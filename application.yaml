@@ -1,0 +1,65 @@
+server:
+  port: 8080
+  indexingAvailable: true
+
+#spring.profiles.active: mysql
+spring.profiles.active: postgresql
+
+spring.jpa.show-sql: false
+
+spring:
+  jpa.properties.hibernate.enable_lazy_load_no_trans: true
+
+  thymeleaf:
+    enabled: true
+    encoding: UTF-8
+
+  messages.basename: lang.messages
+
+#  main:
+#    banner-mode: off
+
+logging:
+  level.root: INFO
+  file.name: logs/info.log
+
+config:
+  forSitesThreadNumber: 12
+  forPagesThreadNumber: 12
+  repeatedPageCount: 14
+  maxPagesInSite: 2000
+
+  sites:
+    - url: http://www.playback.ru
+      name: PlayBack.ru
+      pause: 0
+    - url: https://volochek.life
+      name: Вышний Волочёк
+      pause: 0
+    - url: http://radiomv.ru
+      name: Милицейская волна
+      pause: 0
+    - url: https://ipfran.ru
+      name: Институт прикладной физики Российской академии наук
+      pause: 0
+    - url: https://dimonvideo.ru
+      name: DIMONVIDEO
+      pause: 0
+    - url: https://nikoartgallery.com
+      name: Niko ART GALLERY
+      pause: 0
+    - url: https://et-cetera.ru/mobile
+      name: Театр «Et Cetera»
+      pause: 0
+    - url: https://www.lutherancathedral.ru
+      name: Кафедральный собор святых Петра и Павла
+      pause: 0
+    - url: https://dombulgakova.ru
+      name: Булгаковскiй домъ
+      pause: 0
+    - url: https://www.svetlovka.ru
+      name: Светловка
+      pause: 0
+    - url: https://www.lenta.ru
+      name: Лента.ру
+      pause: 500
