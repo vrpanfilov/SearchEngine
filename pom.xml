@@ -81,15 +81,11 @@
 			<groupId>org.apache.lucene.morphology</groupId>
 			<artifactId>morph</artifactId>
 			<version>1.5</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/morphology/morph-1.5.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene.morphology</groupId>
 			<artifactId>russian</artifactId>
 			<version>1.5</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/morphology/russian-1.5.jar</systemPath>
 		</dependency>
 	</dependencies>
 
