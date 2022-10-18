@@ -59,9 +59,7 @@ public class SiteBuilder implements Runnable {
                 Repos.siteRepo.findByUrlAndType(siteUrl, Site.INDEXING);
         if (!indexingSite.isEmpty()) {
             indexingSite.get().setType(Site.REMOVING);
-            synchronized (Site.class) {
-                Repos.siteRepo.saveAndFlush(indexingSite.get());
-            }
+            Repos.siteRepo.saveAndFlush(indexingSite.get());
         }
 
         site = new Site();
@@ -71,9 +69,7 @@ public class SiteBuilder implements Runnable {
         site.setSiteBuilder(this);
         site.setType(Site.INDEXING);
 
-        synchronized (Site.class) {
-            Repos.siteRepo.saveAndFlush(site);
-        }
+        Repos.siteRepo.saveAndFlush(site);
     }
 
     @Override
@@ -86,9 +82,7 @@ public class SiteBuilder implements Runnable {
                     .orElse(null);
             if (indexingSite != null) {
                 indexingSite.setType(Site.REMOVING);
-                synchronized (Site.class) {
-                    Repos.siteRepo.saveAndFlush(indexingSite);
-                }
+                Repos.siteRepo.saveAndFlush(indexingSite);
             }
             log.info("Индексация сайта \"" + site.getName() + "\" прервана");
         }
@@ -127,9 +121,7 @@ public class SiteBuilder implements Runnable {
         }
         if (prevSite != null) {
             prevSite.setType(Site.REMOVING);
-            synchronized (Site.class) {
-                Repos.siteRepo.saveAndFlush(prevSite);
-            }
+            Repos.siteRepo.saveAndFlush(prevSite);
         }
 
         if (site.getLastError().isEmpty()) {
@@ -137,13 +129,9 @@ public class SiteBuilder implements Runnable {
         } else {
             site.setType(Site.FAILED);
         }
-        synchronized (Site.class) {
-            Repos.siteRepo.saveAndFlush(site);
-        }
+        Repos.siteRepo.saveAndFlush(site);
 
-        synchronized (Site.class) {
-            Repos.siteRepo.deleteAllByType(Site.REMOVING);
-        }
+        Repos.siteRepo.deleteAllByType(Site.REMOVING);
     }
 
     public static void buildSite(String siteUrl) {

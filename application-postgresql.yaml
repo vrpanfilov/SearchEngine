@@ -1,7 +1,7 @@
 spring:
   sql.init:
-#    mode: always
-    mode: never
+    mode: always
+#    mode: never
     platform: postgresql
   datasource:
     url: jdbc:postgresql://localhost:5432/search_engine

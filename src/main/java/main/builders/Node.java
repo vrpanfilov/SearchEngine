@@ -134,14 +134,12 @@ public class Node {
             Repos.pageRepo.saveAndFlush(page);
         }
 
-        synchronized (Site.class) {
-            site.getPages().add(page);
-        }
+        site.getPages().add(page);
         addedPageId = page.getId();
 
         page.setContent(null);
 
-        if(!fromPageBuilder) {
+        if (!fromPageBuilder) {
             log.info(site.getUrl() + pagePath);
         }
 

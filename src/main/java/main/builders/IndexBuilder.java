@@ -39,9 +39,7 @@ public class IndexBuilder {
     }
 
     public static void build(Site site) {
-        synchronized (Lemma.class) {
-            Repos.lemmaRepo.deleteAllInBatchBySite(site);
-        }
+        Repos.lemmaRepo.deleteAllInBatchBySite(site);
         log.info(TABS + "Сайт \"" + site.getName() + "\": строим леммы и индексы");
         IndexBuilder indexBuilder = new IndexBuilder(site, null, null, null);
         indexBuilder.buildIndex();
@@ -122,9 +120,7 @@ public class IndexBuilder {
             return;
         }
         var lemmaCollection = lemmas.values();
-        synchronized (Lemma.class) {
-            Repos.lemmaRepo.saveAllAndFlush(lemmaCollection);
-        }
+        Repos.lemmaRepo.saveAllAndFlush(lemmaCollection);
 
         log.info(TABS + "Сайт \"" + site.getName() + "\": cохраняем индексы");
         saveIndicesByMultipleInsert();
@@ -143,9 +139,7 @@ public class IndexBuilder {
                     .filter(index -> index.getPage().getId() == page.getId()
                             && index.getPage().getCode() == Node.OK)
                     .toList();
-            synchronized (Index.class) {
-                Repos.indexRepo.saveAllAndFlush(pageIndices);
-            }
+            Repos.indexRepo.saveAllAndFlush(pageIndices);
             ind++;
             if (ind % 100 == 0) {
                 log.info(TABS + "Сайт \"" + site.getName() + "\": сохранено страниц - " + ind);

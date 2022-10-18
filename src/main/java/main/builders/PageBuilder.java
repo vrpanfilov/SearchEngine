@@ -82,9 +82,7 @@ public class PageBuilder implements Runnable {
             }
         }
 
-        synchronized (Lemma.class) {
-            Repos.lemmaRepo.deleteAllInBatch(lemmasToDelete);
-        }
+        Repos.lemmaRepo.deleteAllInBatch(lemmasToDelete);
 
         List<Index> pageIndices = new ArrayList<>();
         pageIndices.addAll(indices.values().stream()
@@ -94,16 +92,12 @@ public class PageBuilder implements Runnable {
         synchronized (Page.class) {
             Repos.pageRepo.saveAndFlush(page);
         }
-        synchronized (Lemma.class) {
-            Repos.lemmaRepo.deleteAllInBatch(lemmasToDelete);
-            Repos.lemmaRepo.saveAllAndFlush(lemmaList);
-        }
-        synchronized (Index.class) {
-            Repos.indexRepo.saveAllAndFlush(pageIndices);
-        }
+        Repos.lemmaRepo.deleteAllInBatch(lemmasToDelete);
+        Repos.lemmaRepo.saveAllAndFlush(lemmaList);
+        Repos.indexRepo.saveAllAndFlush(pageIndices);
         synchronized (Page.class) {
             if (oldPages != null) {
-                for(Page p : oldPages) {
+                for (Page p : oldPages) {
                     Repos.pageRepo.deleteById(p.getId());
                 }
             }
