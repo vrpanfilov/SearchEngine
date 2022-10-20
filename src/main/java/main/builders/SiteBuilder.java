@@ -131,7 +131,14 @@ public class SiteBuilder implements Runnable {
         }
         Repos.siteRepo.saveAndFlush(site);
 
-        Repos.siteRepo.deleteAllByType(Site.REMOVING);
+        int removingCount = Repos.siteRepo.countByType(Site.REMOVING);
+        if (removingCount > 0) {
+            try {
+                Repos.siteRepo.deleteByType(Site.REMOVING);
+            } catch (Exception ex) {
+                log.warn("Repos.siteRepo.deleteAllByType(Site.REMOVING)");
+            }
+        }
     }
 
     public static void buildSite(String siteUrl) {

@@ -17,5 +17,5 @@ public interface SiteRepository extends JpaRepository<Site, Integer> {
     Integer countByType(String type);
     List<Site> findAllByType(String type);
     @Transactional
-    void deleteAllByType(String type);
+    void deleteByType(String type);
 }
