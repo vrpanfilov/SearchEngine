@@ -3,7 +3,6 @@ package main.repository;
 import lombok.extern.slf4j.Slf4j;
 import main.config.Props;
 import main.model.Index;
-import main.model.Site;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

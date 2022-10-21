@@ -1,9 +1,7 @@
 package main.repository;
 
 import main.model.Site;
-import main.model.Index;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
