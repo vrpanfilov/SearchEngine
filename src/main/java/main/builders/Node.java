@@ -36,7 +36,7 @@ public class Node {
 
     private static Set<String> EXTEMSIONS_TO_SKIP = new HashSet<>(Arrays.asList(
             ".jpg", ".pdf", ".png", "jpeg", "jfif", ".doc", ".docx", ".xls",
-            ".xlsx", ".pptx", ".rtf", ".mp4"));
+            ".xlsx", ".pptx", ".rtf", ".mp4", ".gif"));
 
     private Site site;
     private String pagePath;
@@ -105,6 +105,8 @@ public class Node {
                     return null;
                 }
                 errorCode = 404;    // // Ссылка на pdf-документ, несущ. страница, проигрыватель
+            } else if (message.contains("Connection timed out")) {
+                errorCode = 408;
             } else if (message.contains("Status=500")) {
                 errorCode = 401;    // Страница авторизации
             } else if (message.contains("ConnectException: Connection refused")) {
@@ -121,6 +123,7 @@ public class Node {
             switch (page.getCode()) {
                 case 401 -> site.setLastError("Обращение к несуществующему домену");
                 case 403 -> site.setLastError("Главная страница недоступна");
+                case 408 -> site.setLastError("Таймаут при соединении");
                 case 525 -> site.setLastError("Kвитирование SSL не удалось");
             }
             return doc;
@@ -180,10 +183,10 @@ public class Node {
             if (!href.startsWith("/") || href.startsWith("#")) {
                 continue;
             }
-            if (href.contains("/?")) {
+            if (href.contains("?")) {
                 continue;
             }
-            if (href.contains("?PAGE")) {
+            if (href.contains("&")) {
                 continue;
             }
             if (href.startsWith("//")) {

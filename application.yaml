@@ -27,7 +27,7 @@ config:
   forSitesThreadNumber: 12
   forPagesThreadNumber: 12
   repeatedPageCount: 14
-  maxPagesInSite: 2000
+  maxPagesInSite: 3000
 
   sites:
     - url: http://www.playback.ru

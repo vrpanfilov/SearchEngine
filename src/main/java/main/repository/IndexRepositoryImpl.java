@@ -21,6 +21,8 @@ public class IndexRepositoryImpl implements IndexRepositoryCustom {
 
     @Override
     public void insertIndexList(String siteName, List<Index> indices) {
+        int ONE_THOUSAND = 1000;
+        int SAVING_PORTION = 100 * ONE_THOUSAND;
         StringBuilder insertBuilder = new StringBuilder();
         int currIndex = 0;
         while (currIndex < indices.size()) {
@@ -32,8 +34,13 @@ public class IndexRepositoryImpl implements IndexRepositoryCustom {
             Query query = entityManager.
                     createNativeQuery(sql);
             query.executeUpdate();
-            log.info(TABS + "Сайт \"" + siteName + "\": " +
-                    "сохранено " + currIndex + " индексов");
+            if (currIndex % SAVING_PORTION == 0) {
+                log.info(TABS + "Сайт \"" + siteName + "\": " +
+                        "сохранено " + currIndex / ONE_THOUSAND + " тыс. индексов");
+            } else {
+                log.info(TABS + "Сайт \"" + siteName + "\": " +
+                        "сохранено " + currIndex + " индексов");
+            }
         }
     }
 

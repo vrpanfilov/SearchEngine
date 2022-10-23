@@ -120,31 +120,15 @@ public class IndexBuilder {
             return;
         }
         var lemmaCollection = lemmas.values();
-        Repos.lemmaRepo.saveAllAndFlush(lemmaCollection);
+        synchronized (Lemma.class) {
+            Repos.lemmaRepo.saveAllAndFlush(lemmaCollection);
+        }
 
         log.info(TABS + "Сайт \"" + site.getName() + "\": cохраняем индексы");
         saveIndicesByMultipleInsert();
 
         log.info(TABS + "Сайт \"" + site.getName() + "\": " +
                 "всего сохранено страниц - " + site.getPages().size());
-    }
-
-    private void saveIndicesBySaveAllAndFlush() {
-        int ind = 1;
-        for (Page page : site.getPages()) {
-            if (SiteBuilder.isStopping()) {
-                return;
-            }
-            List<Index> pageIndices = indices.values().stream()
-                    .filter(index -> index.getPage().getId() == page.getId()
-                            && index.getPage().getCode() == Node.OK)
-                    .toList();
-            Repos.indexRepo.saveAllAndFlush(pageIndices);
-            ind++;
-            if (ind % 100 == 0) {
-                log.info(TABS + "Сайт \"" + site.getName() + "\": сохранено страниц - " + ind);
-            }
-        }
     }
 
     private void saveIndicesByMultipleInsert() {
@@ -156,6 +140,8 @@ public class IndexBuilder {
             return;
         }
         String siteName = site.getName();
-        Repos.indexImplRepo.insertIndexList(siteName, siteIndices);
+        synchronized (Index.class) {
+            Repos.indexImplRepo.insertIndexList(siteName, siteIndices);
+        }
     }
 }
